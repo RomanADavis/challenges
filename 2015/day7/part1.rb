@@ -16,7 +16,7 @@ class Circuit
   end
 
   def bnot(value)
-    return
+    return value.bnot
   end
 end
 
