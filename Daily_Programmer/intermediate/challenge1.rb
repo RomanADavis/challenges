@@ -1,6 +1,6 @@
 class Menu
   def self.show
-    puts "What's your name?"
+    puts "\nWhat's your name?"
     new($stdin.gets.chomp).start
   end
 
