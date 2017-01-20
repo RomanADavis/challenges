@@ -1,5 +1,5 @@
 require "minitest/autorun"
-require "./lib/solutions/euler1"
+require "./solutions/euler1"
 describe Integer do
   describe "multiple_of?" do
     it "returns true when self is divisible by it's argument" do
