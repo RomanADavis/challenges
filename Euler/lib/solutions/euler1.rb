@@ -4,7 +4,7 @@
 #  Find the sum of all the multiples of 3 or 5 below 1000.
 
 # Golfed version
- p 1000.times.inject {|total, n | n % 3 == 0 || n % 5 == 0 ? total + n : total}
+ p (1..1000).select {|number| number % 3 == 0 || number % 5 == 0}.inject(:+)
 
  # Something a little stupid, but more readable
  total = 0
@@ -26,11 +26,10 @@ end
 
  class Array
    def sum
-     if block_given?
-       self.inject {|total, number| yield(number) ? total + number : total }
-     end
      self.inject(:+)
    end
+
+
  end
 
  class Integer
@@ -39,4 +38,6 @@ end
    end
  end
 
- p NaturalNumbers.under(1000).sum {|n| n.multiple_of?(3) || n.multiple_of?(5) }
+ puts NaturalNumbers.under(1000).select {|number| number.multiple_of?(3) || number.multiple_of?(5)}.sum
+
+ ## I think I can make a better SDL tnan this. Let me think about it.
