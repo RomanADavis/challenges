@@ -3,12 +3,12 @@
 
 class Integer
   def bottles
-    song = "#{self} bottles of beer on the wall. #{self} bottles of beer. "
-    song += "Take one down. Pass it around. "
+    song = "#{self} bottle#{self > 1 ? "s" : ""} of beer on the wall."
+    song += " #{self} bottles of beer. Take one down. Pass it around. "
     print song + "#{self} bottles of beer on the wall.  "
     sleep(1)
     print "\r"
-    self > 0 ? (self - 1).bottles : return
+    self > 1 ? (self - 1).bottles : return
   end
 end
 
