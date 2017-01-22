@@ -9,7 +9,7 @@
 #Honestly, this is largely stolen from
 #https://www.ruby-forum.com/topic/109325
 #still, really interesting!
-
+  
 class Fractal
   def initialize(width = 100, height = 100)
     @x = 0
