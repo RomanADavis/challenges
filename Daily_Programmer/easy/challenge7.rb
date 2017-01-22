@@ -57,8 +57,8 @@ class Morse
   def self.beep(morse)
     morse.chars.each do |char|
       case char
-      when "\\" then sleep(0.1)
-      when " " then sleep(0.05)
+      when "\\" then sleep(0.08)
+      when " " then sleep(0.02)
       when "." then Sound.beep(800, 100)
       when "-" then Sound.beep(600, 200)
       end
@@ -66,9 +66,13 @@ class Morse
   end
 end
 
-code = ".... . .-.. .-.. --- / -.. .- .. .-.. -.-- / .--. .-. --- --. .-. .- -- -- . .-. / --. --- --- -.. / .-.. ..- -.-. -.- / --- -. / - .... . / -.-. .... .- .-.. .-.. . -. --. . ... / - --- -.. .- -.--"
+## GHETTO TESTS
+#code = ".... . .-.. .-.. --- / -.. .- .. .-.. -.-- / .--. .-. --- --. .-. .- -- -- . .-. / --. --- --- -.. / .-.. ..- -.-. -.- / --- -. / - .... . / -.-. .... .- .-.. .-.. . -. --. . ... / - --- -.. .- -.--"
+#
+# puts Morse.deencrypt(code)
+# puts test = Morse.encrypt("The rain in Spain falls mainly on the plain.")
+# puts Morse.deencrypt(test)
+# Morse.beep(code)
 
-puts Morse.deencrypt(code)
-puts test = Morse.encrypt("The rain in Spain falls mainly on the plain.")
-puts Morse.deencrypt(test)
-Morse.beep(code)
+puts message = Morse.encrypt(ARGV.first)
+Morse.beep(message)
