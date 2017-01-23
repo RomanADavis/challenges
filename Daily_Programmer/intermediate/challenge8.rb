@@ -4,7 +4,7 @@
 # integer.
 # input: one-hundred, four output: 104
 
-class integer
+class Integer
   def to_name
     number = self.to_s
     number[-1]
