@@ -10,10 +10,10 @@ class game
   end
 
   def play
-    puts instructions
+    puts intro
     play_round until @chances == 0 || blanks_filled?
-    you_win if blanks_filled
-
+    return puts you_win if blanks_filled?
+    puts you_lose
   end
 
   def play_round
@@ -30,7 +30,7 @@ class game
     letter
   end
 
-  def instructions
+  def intro
     """
     \"You really shouldn't have come into this town,\" you think as you sit up,
     nursing a hangover. You see the bars around your cell. You REALLY shouldn't
@@ -45,7 +45,7 @@ class game
 
     \"What kind of game is this?\"
 
-    \"Well, you just have to guess a word and...\" 
+    \"Well, you just have to guess a word and...\"
     """
   end
 
@@ -61,5 +61,28 @@ class game
 
   def blanks_filled?
     !@blanks.chars.any {|char| char == blank}
+  end
+
+  def you_win
+    """
+    \"#{@word.capitalize}!,\" you cry, \"It's #{@word.upcase}!\"
+
+    \"That's right.\" He nods. \"I suppose you'll be taking this.\" He turns
+    around, keeping his face out of view as he hands you something.
+
+    You look down. It's the hood. \"I guess this is what I signed up for.\"
+
+    You stay there, holding the hood, as the hangman rides off into the night.
+    """
+  end
+
+  def you_lose
+    """
+    The hot sun burns your face as the hangman takes you to the gallows. You
+    step onto the platform. He bows his head and mumbles a few words. He
+    tightens and pulls the rope to make sure it would hold.
+
+    You hear a snap, as the floor opens, and you fall.
+    """
   end
 end
