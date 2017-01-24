@@ -1,0 +1,3 @@
+Ash: 4
+Brock: 3
+Programmer: 0
