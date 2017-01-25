@@ -8,7 +8,7 @@ require "minitest/autorun"
 require "./solutions/part1"
 
 describe "wrapping" do
-  it "return the surface of a cubem plus it's smallest size" do
+  it "return the surface of a cube plus it's smallest size" do
     wrapping("2x3x4").must_equal 58
     wrapping("1x1x10").must_equal 43
   end
