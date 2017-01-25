@@ -30,5 +30,4 @@ class String
   end
 end
 
-strings = File.readlines("./input/strings.txt")
-puts strings.inject(0) {|total, string| string.nice? ? total + 1 : total}
+strings = File.readlines("./input/strings.txt").count {|string| string.nice?}
