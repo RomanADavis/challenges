@@ -26,4 +26,4 @@ def floor(stairs)
   stairs.chars.inject(0) {|total, char| char == "(" ? total + 1 : total - 1}
 end
 
-p floor(File.read("./input/day1.txt").chomp)
+p floor(File.read("./input/stairs.txt").chomp)
