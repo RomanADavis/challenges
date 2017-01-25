@@ -10,7 +10,7 @@
 #     It does not contain the strings ab, cd, pq, or xy, even if they are part
 #     of one of the other requirements.
 
-class string
+class String
   def nice?
     return false unless vowels_at_least?(3)
     return false unless repeating_letters?
@@ -29,3 +29,6 @@ class string
     match(/ab|cd|pq|xy/)
   end
 end
+
+strings = File.readlines("./input/strings.txt")
+puts strings.inject(0) {|total, string| string.nice? ? total + 1 : total}
