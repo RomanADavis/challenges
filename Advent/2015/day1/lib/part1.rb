@@ -23,5 +23,5 @@
 
 # A little over golfed
 def floor(stairs)
-  (stairs.chars.map {|stair| stair == "(" ? 1 : -1 } << 0).inject(:+)
+  (stairs.chars.map {|stair| stair == "(" ? 1 : -1 }).inject(:+)
 end
