@@ -4,7 +4,7 @@
 
 def sieve number
   number = number / 2
-  marked = Hash.new(true)
+  marked = Hash.new
   (1..((number - 1) /3)).each do |i|
     (1..i).each do |j|
       marked[i + j + 2 * i * j] = true
