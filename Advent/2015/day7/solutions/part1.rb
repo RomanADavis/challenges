@@ -30,14 +30,14 @@ class Emulator
     return wire.to_i if wire.match(/^\d+$/) # Is it a string of digits?
     #puts self.output
     unless self.output.has_key?(wire)
+      puts "\'#{wire}\'"
       equation = self.environment[wire]
-      raise "There is no #{wire}" if equation.nil?
+      #raise "There is no #{wire}" if equation.nil?
 
       if equation.length == 1
         value = calculate(equation.first)
 
       else
-        puts equation
         op = equation[-2]
         a, b = equation.first, equation.last
         value = case op
@@ -56,4 +56,4 @@ class Emulator
 end
 
 e = Emulator.new(File.readlines("./input/instructions.txt"))
-puts e.calculate('a')
+puts a = e.calculate('a')
