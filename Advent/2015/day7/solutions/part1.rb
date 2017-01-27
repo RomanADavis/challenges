@@ -17,7 +17,6 @@
 class Emulator
   attr_accessor :output, :environment
   def initialize(input)
-    #@input = input
     self.output = {}
     self.environment = {}
     input.each do |line|
@@ -28,30 +27,32 @@ class Emulator
 
   def calculate(wire)
     return wire.to_i if wire.match(/^\d+$/) # Is it a string of digits?
-    #puts self.output
+
     unless self.output.has_key?(wire)
-      puts "\'#{wire}\'"
       equation = self.environment[wire]
-      #raise "There is no #{wire}" if equation.nil?
 
       if equation.length == 1
         value = calculate(equation.first)
-
       else
-        op = equation[-2]
-        a, b = equation.first, equation.last
-        value = case op
-                when "AND" then calculate(a) & calculate(b)
-                when "OR" then calculate(a) | calculate(b)
-                when "LSHIFT" then calculate(a) << calculate(b)
-                when "RSHIFT" then calculate(a) >> calculate(b)
-                when "NOT" then ~calculate(b)
-                end
+        value = process_gate(equation)
       end
+
       self.output[wire] = value
     end
 
     self.output[wire]
+  end
+
+  def process_gate(equation)
+    op, a, b = equation[-2], equation.first, equation.last
+
+    case op
+    when "AND" then calculate(a) & calculate(b)
+    when "OR" then calculate(a) | calculate(b)
+    when "LSHIFT" then calculate(a) << calculate(b)
+    when "RSHIFT" then calculate(a) >> calculate(b)
+    when "NOT" then ~calculate(b)
+    end
   end
 end
 
