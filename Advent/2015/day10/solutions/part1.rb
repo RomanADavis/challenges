@@ -13,16 +13,21 @@
 input = 1321131112.to_s
 
 def look_say(number)
-  output = ""
-  digits = /^(.)\1*/
-  while number.length > 0
-    current = number.match(digits)
-    number.gsub!(digits, "")
-    output += "#{current.to_s.length}#{current.to_s[0]}"
+  current_digit = times = output = ""
+  n = number.chars
+  count = 0
+  until n.length.zero?
+    current_digit = n.shift
+    times = 1
+    while current_digit == n[0]
+      times += 1
+      n.shift
+    end
+    output += "#{times}#{current_digit}"
   end
   output
 end
 
 40.times { input = look_say(input) }
 
-puts input.lengt
+puts look_say 21.to_s
