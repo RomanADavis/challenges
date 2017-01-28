@@ -39,13 +39,18 @@ class Reindeer
   end
 
   def go
-    self.fly_time_left = self.fly_time if self.rest_time_left == 0
-    self.rest_time_left -= 1 if self.rest_time_left > 0
-    if self.fly_time_left > 0
-      self.distance += self.speed
-      self.fly_time_left -= 1
-    end
-    self.rest_time_left = self.rest_time if self.fly_time_left == 0
+    self.fly_time_left.zero? ? rest : fly
+  end
+
+  def fly
+    self.fly_time_left -= 1
+    self.distance += self.speed
+    self.rest_time_left = self.rest_time if self.fly_time_left.zero?
+  end
+
+  def rest
+    self.rest_time_left -= 1
+    self.fly_time_left = self.fly_time if self.rest_time_left.zero?
   end
 
   def race(seconds)
@@ -60,8 +65,8 @@ contestants.each do |contestant|
   race << Reindeer.new(contestant)
 end
 
-seconds = 1000
+seconds = 2503
 
 race.each {|reindeer| reindeer.race(seconds)}
 
-puts race.max_by {|reindeer| puts reindeer.distance }.name
+puts race.max_by {|reindeer| reindeer.distance }.distance

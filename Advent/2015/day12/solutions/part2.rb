@@ -8,7 +8,6 @@
 
 json = File.read("./input/json.txt")
 
-p json.scan(/{|}/)
 class Account
   def initialize(json)
     self.account = json
@@ -19,7 +18,12 @@ class Account
     self.account.match("{")
     start = Regexp.last_match(0)[0] # Index of curly brace
     account = self.account[start..-1]
-    account.scan(/{|}/)
 
+    depth = 1
+    until depth.zero?
+      bracket = account.match(/{|}/).to_s
+      bracket == "}" ? depth -= 1 : depth += 1
+      account = account if depth > 0
+    end
   end
 end
