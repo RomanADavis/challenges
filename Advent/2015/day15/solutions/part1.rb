@@ -40,6 +40,7 @@
 #
 # Given the ingredients in your kitchen and their properties, what is the total
 # score of the highest-scoring cookie you can make?
+
 ingredients = File.readlines("./input/ingredients.txt")
 
 ingredients.map! do |description|
