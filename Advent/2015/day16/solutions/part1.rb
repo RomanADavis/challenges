@@ -55,16 +55,8 @@ aunts = File.readlines("./input/aunts.txt").map do |line|
     line[6].to_sym => line[7].to_i}
 end
 
-answer = -1
-
-aunts.each do |aunt|
-  correct = true
-  aunt.keys.each do |key|
-    if sender[key]
-      correct = false unless aunt[key] == sender[key]
-    end
-    answer = aunt[:sue] if correct
-  end
+sender = aunts.find do |aunt|
+  sender.all? { |key, value| aunt[key].nil? || aunt[key] == sender[key] }
 end
 
-puts sender
+puts sender[:sue]

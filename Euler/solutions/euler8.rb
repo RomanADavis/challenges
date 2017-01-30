@@ -25,12 +25,6 @@
 # Find the thirteen adjacent digits in the 1000-digit number that have the
 # greatest product. What is the value of this product?
 
-input = File.readlines("./input/euler8.txt")
+input = File.read("./input/euler8.txt").gsub(/\s/, '').chars.map(&:to_i)
 
-digits = input.map {|line| line.chars.map(&:to_i)}
-
-candidates = digits.map do |line|
-  line.each_cons(13).map {|adjacent| adjacent.inject(:*)}
-end
-
-puts candidates.flatten.max
+p input.each_cons(13).to_a.map {|adjacent| adjacent.inject(:*)}.max
