@@ -25,11 +25,11 @@ def ways_to_fill_a_fridge(amount, available = [5, 5, 10, 15, 20])
     schemes.each {|scheme| ways << scheme if scheme.inject(:+) == amount}
     containers += 1
   end
-  ways.length
+  ways
 end
 
-p ways_to_fill_a_fridge(25)
+p ways_to_fill_a_fridge(25).length
 
 input = File.readlines("./input/containers.txt").map(&:to_i)
 
-p ways_to_fill_a_fridge(150, input)
+p ways_to_fill_a_fridge(150, input).length
