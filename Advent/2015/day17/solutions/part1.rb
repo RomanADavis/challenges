@@ -17,16 +17,19 @@
 
 # Recursive method
 
-def methods_of_change(amount, containers = [25, 15, 10, 5])
-  return 0 if amount.zero?
-  ways = 0
-  containers.each do |container|
-    next if (amount - container) < 0
-    next ways += 1 if amount == container
-    ways += 1 + methods_of_change(amount - container)
+def ways_to_fill_a_fridge(amount, available = [5, 5, 10, 15, 20])
+  containers = 1
+  ways = []
+  until containers > available.length
+    schemes = available.combination(containers)
+    schemes.each {|scheme| ways << scheme if scheme.inject(:+) == amount}
+    containers += 1
   end
-  ways
+  ways.length
 end
 
-p methods_of_change(25)
-p methods_of_change(150)
+p ways_to_fill_a_fridge(25)
+
+input = File.readlines("./input/containers.txt").map(&:to_i)
+
+p ways_to_fill_a_fridge(150, input)
