@@ -34,29 +34,28 @@
 #
 # Your puzzle input is 34000000.
 
-input = 34000000
-
-def factors(number)
-  factors = []
+def sum_of_factors(number)
+  sum = 0
   iterator = 1
   while iterator**2 <= number
     if number % iterator == 0
-      [iterator, number / iterator].uniq.each {|factor| factors << factor }
+      [iterator, number / iterator].uniq.each {|factor| sum += factor }
     end
     iterator += 1
   end
-  factors.sort
+  sum
 end
-
-def presents(house)
-  factors(house).inject(:+) * 10
-end
-
-## Ghetto Tests
-# p factors(9)
-# p factors(10)
-# p factors(100)
 
 # (1..9).each do |house|
-#     p presents(house)
+#     puts "House #{house} got #{sum_of_factors(house) * 10} presents"
 # end
+
+input = 34000000 / 10
+
+house = gifts = 0
+
+while !(gifts >= input)
+    house += 2
+    gifts = sum_of_factors(house)
+end
+p house
