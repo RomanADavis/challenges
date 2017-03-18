@@ -77,6 +77,10 @@ weapons = parse_equipment("./input/weapons.txt")
 rings = parse_equipment("./input/rings.txt")
 
 class Boss < Struct.new(:hit_points, :damage, :armor)
-  def initialize
+  def self.parse(filename)
+    stats = File.readlines(filename).map {|line| line.split[-1].to_i}
+    self.new(stats[0], stats[1], stats[2])
   end
 end
+
+p Boss.parse("./input/boss.txt")
