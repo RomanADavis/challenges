@@ -81,6 +81,22 @@ class Boss < Struct.new(:hit_points, :damage, :armor)
     stats = File.readlines(filename).map {|line| line.split[-1].to_i}
     self.new(stats[0], stats[1], stats[2])
   end
+  
+  def attack(player)
+  end
 end
 
-p Boss.parse("./input/boss.txt")
+class Player < Struct.new(:hit_points, :damage, :armor) 
+  def self.equip(equipment = [])
+    damage = armor = 0
+    
+    equipment.each do |item|
+      damage += item.damage
+      armor += item.armor
+    end
+    
+    new(100, damage, armor)
+  end
+end
+
+p Player.equip([weapons[0], armor[0]])
