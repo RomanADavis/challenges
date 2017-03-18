@@ -72,10 +72,6 @@ def parse_equipment(filename)
   stats.map {|line| Item.new(line[1], line[2], line[3])}
 end
 
-armor = parse_equipment("./input/armor.txt")
-weapons = parse_equipment("./input/weapons.txt")
-rings = parse_equipment("./input/rings.txt")
-
 class Boss < Struct.new(:hit_points, :damage, :armor)
   def self.parse(filename)
     stats = File.readlines(filename).map {|line| line.split[-1].to_i}
@@ -83,6 +79,9 @@ class Boss < Struct.new(:hit_points, :damage, :armor)
   end
   
   def attack(player)
+    damage = self.damage - player.armor
+    player.hit_points -= damage
+    puts "The boss deals #{self.damage}-#{player.armor} = #{damage} damage; the player goes down to #{player.hit_points} hit points."
   end
 end
 
@@ -99,4 +98,11 @@ class Player < Struct.new(:hit_points, :damage, :armor)
   end
 end
 
-p Player.equip([weapons[0], armor[0]])
+
+armor = parse_equipment("./input/armor.txt")
+weapons = parse_equipment("./input/weapons.txt")
+rings = parse_equipment("./input/rings.txt")
+boss = Boss.parse("./input/boss.txt")
+player =  Player.equip([weapons[0], armor[0]])
+
+boss.attack(player)
