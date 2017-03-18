@@ -102,14 +102,29 @@ class Player < Struct.new(:hit_points, :damage, :armor)
     boss.hit_points -= damage
     puts "The player deals #{self.damage}-#{boss.armor} = #{damage} damage; the boss goes down to #{boss.hit_points} hit points."
   end
+  
+  def would_win?
+    Engine.battle(self)
+    return hit_points > 0
+  end
 end
 
 
 armor = parse_equipment("./input/armor.txt")
 weapons = parse_equipment("./input/weapons.txt")
 p rings = parse_equipment("./input/rings.txt")
-boss = Boss.parse("./input/boss.txt")
-p player =  Player.equip([weapons[0], armor[0], rings[0]])
+player =  Player.equip([weapons[0]])
 
-boss.attack(player)
-player.attack(boss)
+class Engine
+  @boss = Boss.parse("./input/boss.txt")
+  
+  def self.battle(player)
+    boss = @boss
+    while boss.hit_points > 0 && player.hit_points > 0
+      player.attack(boss)
+      boss.attack(player) if boss.hit_points > 0
+    end
+  end
+end
+
+p player.would_win?
