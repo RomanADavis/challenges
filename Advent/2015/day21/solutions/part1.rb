@@ -72,4 +72,6 @@ def parse_equipment(filename)
     stats.map {|line| Item.new(line[1], line[2], line[3])}
 end
 
-p parse_equipment("./input/armor.txt")
+armor = parse_equipment("./input/armor.txt")
+weapons = parse_equipment("./input/weapons.txt")
+rings = parse_equipment("./input/rings.txt")
