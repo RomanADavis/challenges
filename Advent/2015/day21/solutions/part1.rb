@@ -81,7 +81,7 @@ class Boss < Struct.new(:hit_points, :damage, :armor)
   def attack(player)
     damage = self.damage - player.armor
     player.hit_points -= damage
-    puts "The boss deals #{self.damage}-#{player.armor} = #{damage} damage; the player goes down to #{player.hit_points} hit points."
+    #puts "The boss deals #{self.damage}-#{player.armor} = #{damage} damage; the player goes down to #{player.hit_points} hit points."
   end
 end
 
@@ -101,7 +101,7 @@ class Player < Struct.new(:hit_points, :damage, :armor, :expense)
   def attack(boss)
     damage = self.damage - boss.armor
     boss.hit_points -= damage
-    puts "The player deals #{self.damage}-#{boss.armor} = #{damage} damage; the boss goes down to #{boss.hit_points} hit points."
+    # puts "The player deals #{self.damage}-#{boss.armor} = #{damage} damage; the boss goes down to #{boss.hit_points} hit points."
   end
   
   def would_win?
@@ -110,10 +110,6 @@ class Player < Struct.new(:hit_points, :damage, :armor, :expense)
   end
 end
 
-
-armor = parse_equipment("./input/armor.txt")
-weapons = parse_equipment("./input/weapons.txt")
-rings = parse_equipment("./input/rings.txt")
 
 class Engine
   
@@ -125,6 +121,10 @@ class Engine
     end
   end
 end
+
+armor = parse_equipment("./input/armor.txt")
+weapons = parse_equipment("./input/weapons.txt")
+rings = parse_equipment("./input/rings.txt")
 
 weapon_combos = weapons.combination(1).to_a
 armor_combos = armor.combination(0).to_a + armor.combination(1).to_a
@@ -145,6 +145,5 @@ weapon_combos.each do |weapon_array|
 end
 
 p cost
-p loadout
 
 
