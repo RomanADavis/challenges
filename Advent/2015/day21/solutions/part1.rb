@@ -69,7 +69,7 @@ def parse_equipment(filename)
   stats = File.readlines(filename)
   stats.shift
   stats.map! {|line| line.split.map(&:to_i)}
-  stats.map {|line| Item.new(line[1], line[2], line[3])}
+  stats.map {|line| Item.new(line[-3], line[-2], line[-1])}
 end
 
 class Boss < Struct.new(:hit_points, :damage, :armor)
@@ -85,16 +85,17 @@ class Boss < Struct.new(:hit_points, :damage, :armor)
   end
 end
 
-class Player < Struct.new(:hit_points, :damage, :armor) 
+class Player < Struct.new(:hit_points, :damage, :armor, :expense) 
   def self.equip(equipment = [])
-    damage = armor = 0
+    damage = armor = expense = 0
     
     equipment.each do |item|
       damage += item.damage
       armor += item.armor
+      expense += item.cost
     end
     
-    new(100, damage, armor)
+    new(100, damage, armor, expense)
   end
   
   def attack(boss)
@@ -105,21 +106,19 @@ class Player < Struct.new(:hit_points, :damage, :armor)
   
   def would_win?
     Engine.battle(self)
-    return hit_points > 0
+    return self.hit_points > 0
   end
 end
 
 
 armor = parse_equipment("./input/armor.txt")
 weapons = parse_equipment("./input/weapons.txt")
-p rings = parse_equipment("./input/rings.txt")
-player =  Player.equip([weapons[0]])
+rings = parse_equipment("./input/rings.txt")
 
 class Engine
-  @boss = Boss.parse("./input/boss.txt")
   
   def self.battle(player)
-    boss = @boss
+    boss = Boss.parse("./input/boss.txt")
     while boss.hit_points > 0 && player.hit_points > 0
       player.attack(boss)
       boss.attack(player) if boss.hit_points > 0
@@ -127,4 +126,25 @@ class Engine
   end
 end
 
-p player.would_win?
+weapon_combos = weapons.combination(1).to_a
+armor_combos = armor.combination(0).to_a + armor.combination(1).to_a
+ring_combos = rings.combination(0).to_a + rings.combination(1).to_a + rings.combination(2).to_a
+
+cost = 180 + 102 + 74 # Most expensive loadout
+loadout = ""
+weapon_combos.each do |weapon_array|
+  armor_combos.each do |armor_array|
+    ring_combos.each do |ring_array|
+      player = Player.equip(weapon_array + armor_array + ring_array)
+      if player.would_win? && (player.expense < cost)
+        cost = player.expense
+        loadout = player
+      end
+    end
+  end
+end
+
+p cost
+p loadout
+
+
