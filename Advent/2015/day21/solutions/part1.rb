@@ -96,13 +96,20 @@ class Player < Struct.new(:hit_points, :damage, :armor)
     
     new(100, damage, armor)
   end
+  
+  def attack(boss)
+    damage = self.damage - boss.armor
+    boss.hit_points -= damage
+    puts "The player deals #{self.damage}-#{boss.armor} = #{damage} damage; the boss goes down to #{boss.hit_points} hit points."
+  end
 end
 
 
 armor = parse_equipment("./input/armor.txt")
 weapons = parse_equipment("./input/weapons.txt")
-rings = parse_equipment("./input/rings.txt")
+p rings = parse_equipment("./input/rings.txt")
 boss = Boss.parse("./input/boss.txt")
-player =  Player.equip([weapons[0], armor[0]])
+p player =  Player.equip([weapons[0], armor[0], rings[0]])
 
 boss.attack(player)
+player.attack(boss)
