@@ -66,12 +66,17 @@
 Item = Struct.new(:cost, :damage, :armor)
 
 def parse_equipment(filename)
-    stats = File.readlines(filename)
-    stats.shift
-    stats.map! {|line| line.split.map(&:to_i)}
-    stats.map {|line| Item.new(line[1], line[2], line[3])}
+  stats = File.readlines(filename)
+  stats.shift
+  stats.map! {|line| line.split.map(&:to_i)}
+  stats.map {|line| Item.new(line[1], line[2], line[3])}
 end
 
 armor = parse_equipment("./input/armor.txt")
 weapons = parse_equipment("./input/weapons.txt")
 rings = parse_equipment("./input/rings.txt")
+
+class Boss < Struct.new(:hit_points, :damage, :armor)
+  def initialize
+  end
+end
