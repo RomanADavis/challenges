@@ -62,3 +62,14 @@
 
 # You have 100 hit points. The boss's actual stats are in your puzzle input. What is 
 # the least amount of gold you can spend and still win the fight?
+
+Item = Struct.new(:cost, :damage, :armor)
+
+def parse_equipment(filename)
+    stats = File.readlines(filename)
+    stats.shift
+    stats.map! {|line| line.split.map(&:to_i)}
+    stats.map {|line| Item.new(line[1], line[2], line[3])}
+end
+
+p parse_equipment("./input/armor.txt")
