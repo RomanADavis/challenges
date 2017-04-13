@@ -10,32 +10,34 @@ class GigasecondTest < Minitest::Test
   end
 
   def test_1977_06_13
-    skip
+    # skip
     result = Gigasecond.from(Time.utc(1977, 6, 13, 0, 0, 0))
     assert_equal Time.utc(2009, 2, 19, 1, 46, 40), result
   end
 
   def test_1959_07_19
-    skip
+    # skip
     result = Gigasecond.from(Time.utc(1959, 7, 19, 0, 0, 0))
     assert_equal Time.utc(1991, 3, 27, 1, 46, 40), result
   end
 
   def test_full_time_specified
-    skip
+    # skip
     result = Gigasecond.from(Time.utc(2015, 1, 24, 22, 0, 0))
     assert_equal Time.utc(2046, 10, 2, 23, 46, 40), result
   end
 
   def test_full_time_with_day_roll_over
-    skip
+    # skip
     result = Gigasecond.from(Time.utc(2015, 1, 24, 23, 59, 59))
     assert_equal Time.utc(2046, 10, 3, 1, 46, 39), result
   end
 
   # Test your 1Gs anniversary
   def test_with_your_birthday
-    skip
+    birthday = Time.utc(1989, 3, 10, 0, 0, 0)
+    result = Gigasecond.from(birthday)
+    assert_equal birthday + 10**9, result
   end
 
   # Problems in exercism evolve over time, as we find better ways to ask
@@ -56,6 +58,7 @@ class GigasecondTest < Minitest::Test
   # http://ruby-doc.org/docs/ruby-doc-bundle/UsersGuide/rg/constants.html
 
   def test_bookkeeping
+    # skip
     assert_equal 5, BookKeeping::VERSION
   end
 end
