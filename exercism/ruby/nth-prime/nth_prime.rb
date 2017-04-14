@@ -5,7 +5,6 @@ class Prime
     candidate = 2 # 1 is not prime
 
     while primes.length < n
-      p primes
       primes << candidate unless primes.any? {|prime| candidate % prime == 0}
       candidate += 1
     end
