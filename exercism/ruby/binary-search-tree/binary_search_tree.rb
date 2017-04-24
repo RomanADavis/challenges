@@ -14,6 +14,8 @@ class Bst < Struct.new(:data, :left, :right)
     end
   end
 
+# There's got to be a better way to get all the values in order, but I can't
+# think of what it is right now.
   def values
     values = []
     values << data unless data.nil?
