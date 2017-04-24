@@ -1,36 +1,42 @@
 class Game < Struct.new(:rolls, :frames)
   def initialize
     self.rolls = []
-    self.frames = [[0] * 12]
+    self.frames = []
   end
 
-  def roll(pins)
-    self.rolls << pins
-    track_frames(pins)
+  def roll(n)
+    self.rolls << n
   end
 
-  def track_frames(pins)
-    if self.frames.empty? || self.frames.length > 1 || self.frames.first == 10
-      self.frames << [pins]
-    else
-      self.frames.last << pins
+  def organize_frames
+    frame = []
+    self.rolls.each do |roll|
+      if roll == 10
+        self.frames << [10]
+        frame = []
+      else
+        frame << roll
+      end
+      if frame.length == 2
+        self.frames << frame
+        frame = []
+      end
     end
   end
 
   def score
-    scores = []
+    organize_frames
+    total = 0
     10.times do |index|
-      frame, after, etc = self.frames[index], self.frames[index + 1],
-                          self.frames[index + 2]
-      if frame.first == 10 # strike
-        score = 10 + (after.first == 10 ? 10 + etc.first : after.inject(:+))
+      frame, after = self.frames[index], self.frames[index + 1], etc = self.frames[index + 2]
+      if frame == [10]
+        total += 10 + after.inject(:+) + (after == [10] ? etc : 0)
       elsif frame.inject(:+) == 10
-        score = 10 + after.first
+        total += 10 + after.inject(:+)
       else
-        score = frame.inject(:+)
+        total += frame.inject(:+)
       end
-      scores << score
     end
-    score.inject(:+)
+    total
   end
 end
