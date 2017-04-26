@@ -13,71 +13,71 @@ class QueenTest < Minitest::Test
   end
 
   def test_queen_must_have_positive_rank
-    skip
+    # skip
     assert_raises ArgumentError do
       Queens.new white: [-2, 2]
     end
   end
 
   def test_queen_must_have_rank_on_board
-    skip
+    # skip
     assert_raises ArgumentError do
       Queens.new white: [8, 4]
     end
   end
 
   def test_queen_must_have_positive_file
-    skip
+    # skip
     assert_raises ArgumentError do
       Queens.new white: [2, -2]
     end
   end
 
   def test_queen_must_have_file_on_board
-    skip
+    # skip
     assert_raises ArgumentError do
       Queens.new white: [4, 8]
     end
   end
 
   def test_can_not_attack
-    skip
+    # skip
     queens = Queens.new white: [2, 4], black: [6, 6]
     refute queens.attack?
   end
 
   def test_can_attack_on_same_rank
-    skip
+    # skip
     queens = Queens.new white: [2, 4], black: [2, 6]
     assert queens.attack?
   end
 
   def test_can_attack_on_same_file
-    skip
+    # skip
     queens = Queens.new white: [4, 5], black: [2, 5]
     assert queens.attack?
   end
 
   def test_can_attack_on_first_diagonal
-    skip
+    # skip
     queens = Queens.new white: [2, 2], black: [0, 4]
     assert queens.attack?
   end
 
   def test_can_attack_on_second_diagonal
-    skip
+    # skip
     queens = Queens.new white: [2, 2], black: [3, 1]
     assert queens.attack?
   end
 
   def test_can_attack_on_third_diagonal
-    skip
+    # skip
     queens = Queens.new white: [2, 2], black: [1, 1]
     assert queens.attack?
   end
 
   def test_can_attack_on_fourth_diagonal
-    skip
+    # skip
     queens = Queens.new white: [2, 2], black: [5, 5]
     assert queens.attack?
   end
@@ -99,7 +99,7 @@ class QueenTest < Minitest::Test
   # If you are curious, read more about constants on RubyDoc:
   # http://ruby-doc.org/docs/ruby-doc-bundle/UsersGuide/rg/constants.html
   def test_bookkeeping
-    skip
+    # skip
     assert_equal 2, BookKeeping::VERSION
   end
 end
