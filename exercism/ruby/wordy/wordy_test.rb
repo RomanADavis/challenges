@@ -12,73 +12,73 @@ class WordyTest < Minitest::Test
   end
 
   def test_more_addition
-    skip
+    # skip
     question = 'What is 53 plus 2?'
     assert_equal(55, WordProblem.new(question).answer)
   end
 
   def test_addition_with_negative_numbers
-    skip
+    # skip
     question = 'What is -1 plus -10?'
     assert_equal(-11, WordProblem.new(question).answer)
   end
 
   def test_large_addition
-    skip
+    # skip
     question = 'What is 123 plus 45678?'
     assert_equal(45801, WordProblem.new(question).answer)
   end
 
   def test_subtraction
-    skip
+    # skip
     question = 'What is 4 minus -12?'
     assert_equal(16, WordProblem.new(question).answer)
   end
 
   def test_multiplication
-    skip
+    # skip
     question = 'What is -3 multiplied by 25?'
     assert_equal(-75, WordProblem.new(question).answer)
   end
 
   def test_division
-    skip
+    # skip
     question = 'What is 33 divided by -3?'
     assert_equal(-11, WordProblem.new(question).answer)
   end
 
   def test_multiple_additions
-    skip
+    # skip
     question = 'What is 1 plus 1 plus 1?'
     assert_equal(3, WordProblem.new(question).answer)
   end
 
   def test_addition_and_subtraction
-    skip
+    # skip
     question = 'What is 1 plus 5 minus -2?'
     assert_equal(8, WordProblem.new(question).answer)
   end
 
   def test_multiple_subtraction
-    skip
+    # skip
     question = 'What is 20 minus 4 minus 13?'
     assert_equal(3, WordProblem.new(question).answer)
   end
 
   def test_subtraction_then_addition
-    skip
+    # skip
     question = 'What is 17 minus 6 plus 3?'
     assert_equal(14, WordProblem.new(question).answer)
   end
 
   def test_multiple_multiplication
-    skip
+    # skip
     question = 'What is 2 multiplied by -2 multiplied by 3?'
     assert_equal(-12, WordProblem.new(question).answer)
   end
 
   def test_addition_and_multiplication
-    skip
+    # skip
     question = 'What is -3 plus 7 multiplied by -2?'
     answer = WordProblem.new(question).answer
     message = "You should ignore order of precedence. -3 + 7 * -2 = -8, not #{answer}"
@@ -86,13 +86,13 @@ class WordyTest < Minitest::Test
   end
 
   def test_multiple_division
-    skip
+    # skip
     question = 'What is -12 divided by 2 divided by -3?'
     assert_equal(2, WordProblem.new(question).answer)
   end
 
   def test_unknown_operation
-    skip
+    # skip
     question = 'What is 52 cubed?'
     assert_raises ArgumentError do
       WordProblem.new(question).answer
@@ -100,7 +100,7 @@ class WordyTest < Minitest::Test
   end
 
   def test_non_math_question
-    skip
+    # skip
     question = 'Who is the President of the United States?'
     assert_raises ArgumentError do
       WordProblem.new(question).answer
@@ -125,7 +125,7 @@ class WordyTest < Minitest::Test
   # http://ruby-doc.org/docs/ruby-doc-bundle/UsersGuide/rg/constants.html
 
   def test_bookkeeping
-    skip
+    # skip
     assert_equal 1, BookKeeping::VERSION
   end
 end
