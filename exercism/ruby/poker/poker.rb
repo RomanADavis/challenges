@@ -1,11 +1,24 @@
 # This program is probably a tad over engineered. Still, crtique is welcome.
 
 class Poker
-  attr_accessor :best_hand
-  def initialize(*hands)
+  attr_accessor :hands, :best_hand
+  def initialize(hands)
     self.hands = hands.map {|hand| Hand.new(hand)}
 
-    self.best_hand = hands.first > hands.last ? hands.first : hands.last
+  end
+
+  def best_hand
+    return [self.hands.first.card_strings] if self.hands.length == 1
+
+    if self.hands.first > self.hands.last
+      self.best_hand = self.hands.first
+    elsif self.hand.first < self.hands.last
+      self.best_hand = self.hands.last
+    else
+      self.best_hand = self.hands
+    end
+
+    self.beast_hand = self.best_hand.card_strings
   end
 end
 
@@ -75,11 +88,12 @@ class Hand
 
     self.cards = card_strings.map do |card_string|
       rank = LETTER_TO_RANK[card_string[0...-1]]
-      suit = LETTER_TO_SUIT[card_string[-1]]
+      suit_string = card_string[-1]
+      suit = LETTER_TO_SUIT.fetch(suit_string) {raise ArgumentError.new("Unknown suit string #{suit_string}")}
       Card.new(rank, suit)
     end
 
-    self.cards.sort!
+    self.cards.sort_by {|a| a.rank.value}
   end
 
   def royal_flush?
@@ -216,7 +230,15 @@ class Card
     value != other.value
   end
 
+  def royal?
+    self.suit.royal?
+  end
+
   def to_s
     "#{self.rank.to_s} of #{self.suit.name}"
   end
+end
+
+module BookKeeping
+  VERSION = 2
 end
