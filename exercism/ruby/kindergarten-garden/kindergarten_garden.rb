@@ -1,34 +1,43 @@
 class Garden
-  LETTER_TO_PLANT = {G: :grass, C: :clover, R: :radish, V: :violets}
-
-  def self.rollcall(*kids) # Getters and setters for the kids_gardens hash
+  def self.rollcall(*kids) # Getters and setters for the @kids_gardens hash
     kids.each do |kid|
-      define_method(kid) do
-        instance_variable_get("@kids_gardens[:#{kid}]")
-      end
-      define_method("#{kid}=") do |value|
-        instance_variable_set("@kids_gardens[:#{kid}]", value)
+      define_method(kid.downcase.to_sym) do
+        @kid_gardens[kid]
       end
     end
   end
 
-  KIDS = [:alice, :bob, :charlie, :david, :eve, :fred, :ginny, :harriet,
-          :ileana, :joseph, :kincaid, :larry]
+  LETTER_TO_PLANT = {G: :grass, C: :clover, R: :radishes, V: :violets}
 
-  rollcall *KIDS
+  attr_accessor :plants
+  def initialize(window_sill, kids = nil)
 
-  rollcall :alice
-  def initialize(window_sill)
+    example = %w(Alice Bob Charlie David Eve Fred Ginny Harriet Ileana Joseph
+                 Kincaid Larry)
+
+    @kids = kids ? kids.sort : example
+
     rows = window_sill.split("\n")
     self.plants = rows.map do |row|
       row.chars.map {|letter| LETTER_TO_PLANT[letter.to_sym]}
     end
 
-    @kids_gardens = Hash.new([])
+    assign_plants
 
-    self.plants.each do |row|
+    self.class.rollcall *@kids
+  end
+
+  def assign_plants
+    @kid_gardens = Hash.new()
+
+    self.plants.each do |row| # Is ther a less clunky way to do this?
       row.each_with_index do |plant, plant_index|
-        @kids_gardens[KIDS[plant_index / 2]]
+        kid = @kids[plant_index / 2]
+        if @kid_gardens[kid]
+          @kid_gardens[kid] << plant
+        else
+          @kid_gardens[kid] = [plant]
+        end
       end
     end
   end
