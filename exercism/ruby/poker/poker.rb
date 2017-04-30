@@ -7,17 +7,17 @@ class Poker
   end
 
   def best_hand
-    return [self.hands.first.card_strings] if self.hands.length == 1
-
-    if self.hands.first > self.hands.last
-      self.best = self.hands.first
-    elsif self.hands.first < self.hands.last
-      self.best = self.hands.last
-    else
-      return self.best = self.hands.map {|hand| hand.card_strings}
+    result = []
+    max = 0
+    self.hands.each do |hand|
+      if hand.value > max
+        result = [hand.card_strings]
+        max = hand.value
+      elsif hand.value == max
+        result << hand.card_strings
+      end
     end
-
-    self.best = [self.best.card_strings]
+    result
   end
 end
 
