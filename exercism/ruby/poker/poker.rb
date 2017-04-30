@@ -141,7 +141,7 @@ class Hand
     return false unless kids
     remaining_cards = self.cards - kids
 
-    parents = n_of_a_kind(2, remaining_cards)
+    parents = n_of_a_kind?(2, remaining_cards)
     return false unless parents
 
     kids + parents
