@@ -1,4 +1,6 @@
-# This program is probably a tad over engineered. Still, crtique is welcome.
+# This program is probably a tad over engineered. It also seems hacky in
+# general. Critique welcome. Looking forward to seeing other people's solutions
+# and improving it after I've had a little break from this.
 
 class Poker
   attr_accessor :hands, :best
