@@ -4,7 +4,6 @@ class Poker
   attr_accessor :hands, :best
   def initialize(hands)
     self.hands = hands.map {|hand| Hand.new(hand)}
-
   end
 
   def best_hand
@@ -23,10 +22,9 @@ class Poker
 end
 
 class Rank
-  attr_accessor :letter, :value, :royal
+  attr_accessor :name, :value, :royal
   def initialize(name, value = nil, royal = false)
-    raise ArgumentError if letter != letter.to_s.to_i && !value
-    self.letter = letter
+    self.name = name
     self.value = value
     self.royal = royal
   end
@@ -93,7 +91,7 @@ class Hand
       Card.new(rank, suit)
     end
 
-    self.cards.sort_by {|a| a.rank.value}
+    self.cards.sort_by! {|a| a.value}
   end
 
   def royal_flush?
@@ -119,9 +117,9 @@ class Hand
   end
 
   def flush?
-    suit = self.cards.first
+    suit = self.cards.first.suit
 
-    self.cards.all? {|card| card.suit == base.suit}
+    self.cards.all? {|card| card.suit == suit}
   end
 
   def pair?
