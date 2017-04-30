@@ -23,7 +23,7 @@ end
 
 class Rank
   attr_accessor :name, :value, :royal
-  def initialize(name, value = nil, royal = false)
+  def initialize(name, value, royal = false)
     self.name = name
     self.value = value
     self.royal = royal
@@ -41,54 +41,19 @@ class Rank
     self.value > other.value
   end
 
-  def ==(other)
-    self.value == other.value
-  end
-
-  def !=(other)
-    !(self == other)
-  end
-
   def to_s
     self.name
   end
 end
 
 class Hand
-  TWO = Rank.new('2', 1)
-  THREE = Rank.new('3', 2)
-  FOUR = Rank.new('4', 3)
-  FIVE = Rank.new('5', 4)
-  SIX = Rank.new('6', 5)
-  SEVEN = Rank.new('7', 6)
-  EIGHT = Rank.new('8', 7)
-  NINE = Rank.new('9', 8)
-  TEN = Rank.new("10", 9, royalty = true)
-  JACK = Rank.new("Jack", 10, royalty = true)
-  QUEEN = Rank.new("Queen", 11, royalty = true)
-  KING = Rank.new("King", 12, royalty = true)
-  ACE = Rank.new("ACE", 13, royalty = true)
-
-  LETTER_TO_RANK = {'2' => TWO, '3' => THREE, '4' => FOUR, '5' => FIVE,
-                    '6' => SIX, '7' => SEVEN, '8' => EIGHT, '9' => NINE,
-                    "10" => TEN, 'J' => JACK, 'Q' => QUEEN, 'K' => KING,
-                    'A' => ACE}
-
-  Suit = Struct.new(:name)
-
-  LETTER_TO_SUIT = {'S' => Suit.new("Spades"), 'C' => Suit.new("Clubs"),
-                    'H' => Suit.new("Hearts"), 'D' => Suit.new("Daimonds")}
-
   attr_accessor :cards, :card_strings
 
   def initialize(card_strings)
     self.card_strings = card_strings
 
     self.cards = card_strings.map do |card_string|
-      rank = LETTER_TO_RANK[card_string[0...-1]]
-      suit_string = card_string[-1]
-      suit = LETTER_TO_SUIT.fetch(suit_string) {raise ArgumentError.new("Unknown suit string #{suit_string}")}
-      Card.new(rank, suit)
+      Card.new(card_string)
     end
 
     self.cards.sort_by! {|a| a.value}
@@ -106,16 +71,27 @@ class Hand
     self.cards.all? {|card| card.royal?}
   end
 
-  def straight?
-    base = self.cards.first
+  def straight?(cards = self.cards)
+    return ace_low_straight? if cards.last.rank == Card::ACE && cards == self.cards
 
-    self.cards.each_with_index do |card, index|
-      return false unless card.rank.value == base.rank.value + index
+    base = self.cards.first.rank.value
+
+    cards.each_with_index do |card, index|
+      return false unless card.rank.value == base + index
     end
 
     self.cards
   end
 
+  private
+  def ace_low_straight?
+    return false unless self.cards.last.rank == Card::ACE
+
+    # If it's a straight there will be only one ace at the end
+    straight?(self.cards[0...-1])
+  end
+
+  public
   def flush?
     suit = self.cards.first.suit
 
@@ -157,9 +133,10 @@ class Hand
   end
 
   def n_of_a_kind?(n, cards = self.cards)
+    return false if cards == nil || cards.empty?
     cards.permutation.map do |permutation|
-      base = permutation.first
-      hand = permutation.select {|card| base.rank == card.rank}
+      base = permutation.first.rank
+      hand = permutation.select {|card| base == card.rank}
       return hand if hand.length == n
     end
 
@@ -185,10 +162,13 @@ class Hand
   def value
     return @value if @value
     high_card_bonus = highest_value_sequence.max_by {|card| card.value}.value
-    return @value = 800                   if royal_flush?
-    return @value = 700                   if straight_flush?
-    return @value = 600 + high_card_bonus if four_of_a_kind?
-    return @value = 500 + high_card_bonus if full_house?
+    high_card_bonus = 1 if high_card_bonus == 13 && straight? # 5 high straight
+
+    return @value = 900                   if royal_flush?
+    return @value = 800                   if straight_flush?
+    return @value = 700 + high_card_bonus if four_of_a_kind?
+    return @value = 600 + high_card_bonus if full_house?
+    return @value = 500 + high_card_bonus if flush?
     return @value = 400 + high_card_bonus if straight?
     return @value = 300 + high_card_bonus if three_of_a_kind?
     return @value = 200 + high_card_bonus if two_pairs?
@@ -206,8 +186,34 @@ class Hand
 end
 
 class Card
+  TWO = Rank.new('2', 1)
+  THREE = Rank.new('3', 2)
+  FOUR = Rank.new('4', 3)
+  FIVE = Rank.new('5', 4)
+  SIX = Rank.new('6', 5)
+  SEVEN = Rank.new('7', 6)
+  EIGHT = Rank.new('8', 7)
+  NINE = Rank.new('9', 8)
+  TEN = Rank.new("10", 9, royalty = true)
+  JACK = Rank.new("Jack", 10, royalty = true)
+  QUEEN = Rank.new("Queen", 11, royalty = true)
+  KING = Rank.new("King", 12, royalty = true)
+  ACE = Rank.new("Ace", 13, royalty = true)
+
+  LETTER_TO_RANK = {'2' => TWO, '3' => THREE, '4' => FOUR, '5' => FIVE,
+                    '6' => SIX, '7' => SEVEN, '8' => EIGHT, '9' => NINE,
+                    "10" => TEN, 'J' => JACK, 'Q' => QUEEN, 'K' => KING,
+                    'A' => ACE}
+
+  Suit = Struct.new(:name)
+
+  LETTER_TO_SUIT = {'S' => Suit.new("Spades"), 'C' => Suit.new("Clubs"),
+                    'H' => Suit.new("Hearts"), 'D' => Suit.new("Daimonds")}
   attr_accessor :rank, :suit
-  def initialize(rank, suit)
+  def initialize(card_string)
+    rank = LETTER_TO_RANK[card_string[0...-1]]
+    suit_string = card_string[-1]
+    suit = LETTER_TO_SUIT.fetch(suit_string) {raise ArgumentError.new("Unknown suit string #{suit_string}")}
     self.rank = rank
     self.suit = suit
   end
