@@ -14,7 +14,7 @@ class Poker
     elsif self.hands.first < self.hands.last
       self.best = self.hands.last
     else
-      self.best = self.hands
+      return self.best = self.hands.map {|hand| hand.card_strings}
     end
 
     self.best = [self.best.card_strings]
@@ -163,7 +163,7 @@ class Hand
     return @value if @value
 
     return @value = 900                   if royal_flush?
-    return @value = 800                   if straight_flush?
+    return @value = 800 + high_card_bonus if straight_flush?
     return @value = 700 + high_card_bonus if four_of_a_kind?
     return @value = 600 + high_card_bonus if full_house?
     return @value = 500 + high_card_bonus if flush?
@@ -171,7 +171,7 @@ class Hand
     return @value = 300 + high_card_bonus if three_of_a_kind?
     return @value = 200 + high_card_bonus if two_pairs?
     return @value = 100 + high_card_bonus if pair?
-    @value = high_card_bonus
+    @value = self.cards.map {|card| card.value}.inject(:+)
   end
 
   private
