@@ -161,8 +161,6 @@ class Hand
 
   def value
     return @value if @value
-    high_card_bonus = highest_value_sequence.max_by {|card| card.value}.value
-    high_card_bonus = 1 if high_card_bonus == 13 && straight? # 5 high straight
 
     return @value = 900                   if royal_flush?
     return @value = 800                   if straight_flush?
@@ -176,6 +174,15 @@ class Hand
     @value = high_card_bonus
   end
 
+  private
+  def high_card_bonus
+    high_card_bonus = highest_value_sequence.max_by {|card| card.value}.value
+    high_card_bonus = 1 if high_card_bonus == 13 && straight? # 5 high straight
+    high_card_bonus = three_of_a_kind?.first.value if full_house?
+    high_card_bonus
+  end
+
+  public
   def >(other)
     value > other.value
   end
