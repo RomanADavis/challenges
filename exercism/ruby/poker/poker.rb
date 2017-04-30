@@ -1,7 +1,7 @@
 # This program is probably a tad over engineered. Still, crtique is welcome.
 
 class Poker
-  attr_accessor :hands, :best_hand
+  attr_accessor :hands, :best
   def initialize(hands)
     self.hands = hands.map {|hand| Hand.new(hand)}
 
@@ -11,14 +11,14 @@ class Poker
     return [self.hands.first.card_strings] if self.hands.length == 1
 
     if self.hands.first > self.hands.last
-      self.best_hand = self.hands.first
-    elsif self.hand.first < self.hands.last
-      self.best_hand = self.hands.last
+      self.best = self.hands.first
+    elsif self.hands.first < self.hands.last
+      self.best = self.hands.last
     else
-      self.best_hand = self.hands
+      self.best = self.hands
     end
 
-    self.beast_hand = self.best_hand.card_strings
+    self.best = [self.best.card_strings]
   end
 end
 
@@ -31,7 +31,7 @@ class Rank
     self.royal = royal
   end
 
-  def royal
+  def royal?
     self.royal
   end
 
@@ -100,6 +100,10 @@ class Hand
     royal? && straight? && flush?
   end
 
+  def straight_flush?
+    straight? && flush?
+  end
+
   def royal?
     self.cards.all? {|card| card.royal?}
   end
@@ -155,9 +159,9 @@ class Hand
   end
 
   def n_of_a_kind?(n, cards = self.cards)
-    cards.permutaion.map do |permutation|
+    cards.permutation.map do |permutation|
       base = permutation.first
-      hand = permutation.select {|card| base.rank == card.rank} == 3
+      hand = permutation.select {|card| base.rank == card.rank}
       return hand if hand.length == n
     end
 
@@ -173,7 +177,7 @@ class Hand
     return three_of_a_kind? if three_of_a_kind?
     return two_pairs? if two_pairs?
     return pair? if pair?
-    [self.cards.max {|a, b| a.value > b.value}]
+    [self.cards.max_by {|card| card.value}]
   end
 
 # Attempt to turn cards into point values. There are almost certainly many edge
@@ -181,16 +185,17 @@ class Hand
 # well. :(
 
   def value
+    return @value if @value
     high_card_bonus = highest_value_sequence.max {|a, b| a.value > b.value}
-    return 800 if royal_flush?
-    return 700 if straight_flush?
-    return 600 + high_card_bonus if four_of_a_kind?
-    return 500 + high_card_bonus if full_house?
-    return 400 + high_card_bonus if straight?
-    return 300 + high_card_bonus if three_of_a_kind?
-    return 200 + high_card_bonus if two_pairs?
-    return 100 + high_card_bonus if pair?
-    high_card_bonus
+    return @value = 800                   if royal_flush?
+    return @value = 700                   if straight_flush?
+    return @value = 600 + high_card_bonus if four_of_a_kind?
+    return @value = 500 + high_card_bonus if full_house?
+    return @value = 400 + high_card_bonus if straight?
+    return @value = 300 + high_card_bonus if three_of_a_kind?
+    return @value = 200 + high_card_bonus if two_pairs?
+    return @value = 100 + high_card_bonus if pair?
+    @value = high_card_bonus
   end
 
   def >(other)
@@ -231,7 +236,7 @@ class Card
   end
 
   def royal?
-    self.suit.royal?
+    self.rank.royal?
   end
 
   def to_s
