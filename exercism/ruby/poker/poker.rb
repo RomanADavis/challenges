@@ -9,6 +9,40 @@ class Poker
   end
 end
 
+class Rank
+  attr_accessor :letter, :value, :royal
+  def initialize(name, value = nil, royal = false)
+    raise ArgumentError if letter != letter.to_s.to_i && !value
+    self.letter = letter
+    self.value = value
+    self.royal = royal
+  end
+
+  def royal
+    self.royal
+  end
+
+  def <(other)
+    self.value < other.value
+  end
+
+  def >(other)
+    self.value > other.value
+  end
+
+  def ==(other)
+    self.value == other.value
+  end
+
+  def !=(other)
+    !(self == other)
+  end
+
+  def to_s
+    self.name
+  end
+end
+
 class Hand
   TWO = Rank.new('2', 1)
   THREE = Rank.new('3', 2)
@@ -40,7 +74,7 @@ class Hand
     self.card_strings = card_strings
 
     self.cards = card_strings.map do |card_string|
-      rank = LETTER_TO_RANK[card_string[0...-1])]
+      rank = LETTER_TO_RANK[card_string[0...-1]]
       suit = LETTER_TO_SUIT[card_string[-1]]
       Card.new(rank, suit)
     end
@@ -63,7 +97,7 @@ class Hand
       return false unless card.rank.value == base.rank.value + index
     end
 
-    self.cards.map(&:)
+    self.cards
   end
 
   def flush?
@@ -184,38 +218,5 @@ class Card
 
   def to_s
     "#{self.rank.to_s} of #{self.suit.name}"
-end
-
-class Rank
-  attr_accessor :letter, :value, :royal
-  def initialize(name, value = nil, royal = false)
-    raise ArgumentError if letter != letter.to_s.to_i && !value
-    self.letter = letter
-    self.value = value
-    self.royal = royal
-  end
-
-  def royal
-    self.royal
-  end
-
-  def <(other)
-    self.value < other.value
-  end
-
-  def >(other)
-    self.value > other.value
-  end
-
-  def ==(other)
-    self.value == other.value
-  end
-
-  def !=(other)
-    !(self == other)
-  end
-
-  def to_s
-    self.name
   end
 end
