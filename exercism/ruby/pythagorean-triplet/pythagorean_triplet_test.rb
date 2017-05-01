@@ -14,17 +14,17 @@ class TripletTest < Minitest::Test
   end
 
   def test_pythagorean
-    skip
+    # skip
     assert Triplet.new(3, 4, 5).pythagorean?
   end
 
   def test_not_pythagorean
-    skip
+    # skip
     refute Triplet.new(5, 6, 7).pythagorean?
   end
 
   def test_triplets_upto_10
-    skip
+    # skip
     triplets = Triplet.where(max_factor: 10)
     products = triplets.map(&:product).sort
     assert_equal [60, 480], products
