@@ -1,6 +1,25 @@
+class Simulator
+  CHAR_TO_INSTRUCTION = {'L' => :turn_left, 'R' => :turn_right, 'A' => :advance}
+  # Why aren't these just class methods?
+  def instructions(string)
+    string.chars.map {|char| CHAR_TO_INSTRUCTION[char]}
+  end
+
+  def place(robot, **options)
+    robot.at(options[:x], options[:y])
+    robot.orient(options[:direction])
+  end
+
+  def evaluate(robot, string)
+    instructions(string).each {|instruction| robot.send(instruction)}
+  end
+end
+
 class Robot
-  attr_reader :bearing, :coordinates
   CARDINALS = [:north, :east, :south, :west]
+
+  attr_reader :bearing, :coordinates
+
   def at(*coordinates)
     @coordinates = coordinates
   end
