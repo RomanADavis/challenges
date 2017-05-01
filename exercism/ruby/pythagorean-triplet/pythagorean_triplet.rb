@@ -2,10 +2,11 @@ class Triplet
   attr_accessor :sides, :sum, :product
   def self.where(**options)
     max = options[:max_factor]
+    min = options[:min_factor] ? min[:min_factor] : 1
     triplets = []
-    (1..max).each do |c| # There's got to be a better way to do this.
-      (1..c).each do |b|
-        (1..b).each do |a|
+    (min..max).each do |c| # There's got to be a better way to do this.
+      (min..c).each do |b|
+        (min..b).each do |a|
           triplet = self.new(a, b, c)
           triplets << triplet if triplet.pythagorean?
         end
