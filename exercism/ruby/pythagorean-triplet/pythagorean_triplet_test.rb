@@ -9,7 +9,7 @@ class TripletTest < Minitest::Test
   end
 
   def test_product
-    skip
+    # skip
     assert_equal 60, Triplet.new(3, 4, 5).product
   end
 
