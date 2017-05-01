@@ -23,7 +23,7 @@ class Deque
     return seed(value) unless self.head
     node = Node.new(value)
     node.next = self.head
-    self.head.previous = node.next
+    self.head.previous = node
     self.head = node
   end
 
