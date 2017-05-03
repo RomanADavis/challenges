@@ -14,7 +14,7 @@ class TwoBucketTest < Minitest::Test
   end
 
   def test_bucket_one_size_3_bucket_two_size_5_goal_1_start_with_bucket_two
-    skip
+    # skip
     two_bucket = TwoBucket.new(3, 5, 1, 'two')
     assert_equal 8, two_bucket.moves
     assert_equal 'two', two_bucket.goal_bucket
@@ -22,7 +22,7 @@ class TwoBucketTest < Minitest::Test
   end
 
   def test_bucket_one_size_7_bucket_two_size_11_goal_2_start_with_bucket_one
-    skip
+    # skip
     two_bucket = TwoBucket.new(7, 11, 2, 'one')
     assert_equal 14, two_bucket.moves
     assert_equal 'one', two_bucket.goal_bucket
@@ -30,7 +30,7 @@ class TwoBucketTest < Minitest::Test
   end
 
   def test_bucket_one_size_7_bucket_two_size_11_goal_2_start_with_bucket_two
-    skip
+    # skip
     two_bucket = TwoBucket.new(7, 11, 2, 'two')
     assert_equal 18, two_bucket.moves
     assert_equal 'two', two_bucket.goal_bucket
@@ -55,7 +55,7 @@ class TwoBucketTest < Minitest::Test
   # http://ruby-doc.org/docs/ruby-doc-bundle/UsersGuide/rg/constants.html
 
   def test_bookkeeping
-    skip
+    # skip
     assert_equal 2, BookKeeping::VERSION
   end
 end
