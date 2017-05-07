@@ -19,7 +19,7 @@ class AllYourBaseTest < Minitest::Test
   end
 
   def test_binary_to_single_decimal
-    skip
+    # skip
     digits = [1, 0, 1]
     input_base = 2
     output_base = 10
@@ -33,7 +33,7 @@ class AllYourBaseTest < Minitest::Test
   end
 
   def test_single_decimal_to_binary
-    skip
+    # skip
     digits = [5]
     input_base = 10
     output_base = 2
@@ -47,7 +47,7 @@ class AllYourBaseTest < Minitest::Test
   end
 
   def test_binary_to_multiple_decimal
-    skip
+    # skip
     digits = [1, 0, 1, 0, 1, 0]
     input_base = 2
     output_base = 10
@@ -61,7 +61,7 @@ class AllYourBaseTest < Minitest::Test
   end
 
   def test_decimal_to_binary
-    skip
+    # skip
     digits = [4, 2]
     input_base = 10
     output_base = 2
@@ -75,7 +75,7 @@ class AllYourBaseTest < Minitest::Test
   end
 
   def test_trinary_to_hexadecimal
-    skip
+    # skip
     digits = [1, 1, 2, 0]
     input_base = 3
     output_base = 16
@@ -89,7 +89,7 @@ class AllYourBaseTest < Minitest::Test
   end
 
   def test_hexadecimal_to_trinary
-    skip
+    # skip
     digits = [2, 10]
     input_base = 16
     output_base = 3
@@ -103,7 +103,7 @@ class AllYourBaseTest < Minitest::Test
   end
 
   def test_15_bit_integer
-    skip
+    # skip
     digits = [3, 46, 60]
     input_base = 97
     output_base = 73
