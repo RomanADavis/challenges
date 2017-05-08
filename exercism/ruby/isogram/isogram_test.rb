@@ -11,49 +11,49 @@ class IsogramTest < Minitest::Test
   end
 
   def test_isogram_with_only_lower_case_characters
-    skip
+    # skip
     string = "isogram"
     assert Isogram.is_isogram?(string)
   end
 
   def test_word_with_one_duplicated_character
-    skip
+    # skip
     string = "eleven"
     refute Isogram.is_isogram?(string)
   end
 
   def test_longest_reported_english_isogram
-    skip
+    # skip
     string = "subdermatoglyphic"
     assert Isogram.is_isogram?(string)
   end
 
   def test_word_with_duplicated_character_in_mixed_case
-    skip
+    # skip
     string = "Alphabet"
     refute Isogram.is_isogram?(string)
   end
 
   def test_hypothetical_isogrammic_word_with_hyphen
-    skip
+    # skip
     string = "thumbscrew-japingly"
     assert Isogram.is_isogram?(string)
   end
 
   def test_isogram_with_duplicated_non_letter_character
-    skip
+    # skip
     string = "Hjelmqvist-Gryb-Zock-Pfund-Wax"
     assert Isogram.is_isogram?(string)
   end
 
   def test_made_up_name_that_is_an_isogram
-    skip
+    # skip
     string = "Emily Jung Schwartzkopf"
     assert Isogram.is_isogram?(string)
   end
 
   def test_duplicated_character_in_the_middle
-    skip
+    # skip
     string = "accentor"
     refute Isogram.is_isogram?(string)
   end
@@ -76,7 +76,7 @@ class IsogramTest < Minitest::Test
   # http://ruby-doc.org/docs/ruby-doc-bundle/UsersGuide/rg/constants.html
 
   def test_bookkeeping
-    skip
+    # skip
     assert_equal 3, BookKeeping::VERSION
   end
 end
