@@ -1,11 +1,17 @@
 class BaseConverter
   def self.convert(input_base, digits, output_base)
+    raise ArgumentError, "Negative digt" if digits.any? {|digit| digit.negative?}
+    raise ArgumentError, "Invalid base" if input_base < 2 || output_base < 2
+
     number = self.to_i(input_base, digits)
+    return [] if number.nil?
 
     self.to_digits(output_base, number)
   end
 
   def self.to_i(input_base, digits)
+    raise ArgumentError, "Invalid digit for base" unless digits.all? {|digit| digit < input_base}
+
     terms = digits.reverse.map.with_index do |digit, place|
       digit * input_base**place
     end
@@ -15,18 +21,16 @@ class BaseConverter
 
   def self.to_digits(output_base, number)
     digits = []
-    place = 0
 
     until number.zero?
-      digits.unshift(number / output_base**place)
-      number %= output_base**place
-      place += 1
-      p digits, number
-      gets
+      digits.unshift(number % output_base)
+      number /= output_base
     end
 
-    digits
+    digits.empty? ? [0] : digits
   end
 end
 
-p BaseConverter.to_digits(10, 10)
+class BookKeeping
+  VERSION = 2
+end

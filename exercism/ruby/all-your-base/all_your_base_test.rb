@@ -117,7 +117,7 @@ class AllYourBaseTest < Minitest::Test
   end
 
   def test_empty_list
-    skip
+    # skip
     digits = []
     input_base = 2
     output_base = 10
@@ -131,7 +131,7 @@ class AllYourBaseTest < Minitest::Test
   end
 
   def test_single_zero
-    skip
+    # skip
     digits = [0]
     input_base = 10
     output_base = 2
@@ -145,7 +145,7 @@ class AllYourBaseTest < Minitest::Test
   end
 
   def test_multiple_zeros
-    skip
+    # skip
     digits = [0, 0, 0]
     input_base = 10
     output_base = 2
@@ -159,7 +159,7 @@ class AllYourBaseTest < Minitest::Test
   end
 
   def test_leading_zeros
-    skip
+    # skip
     digits = [0, 6, 0]
     input_base = 7
     output_base = 10
@@ -173,7 +173,7 @@ class AllYourBaseTest < Minitest::Test
   end
 
   def test_negative_digit
-    skip
+    # skip
     digits = [1, -1, 1, 0, 1, 0]
     input_base = 2
     output_base = 10
@@ -184,7 +184,7 @@ class AllYourBaseTest < Minitest::Test
   end
 
   def test_invalid_positive_digit
-    skip
+    # skip
     digits = [1, 2, 1, 0, 1, 0]
     input_base = 2
     output_base = 10
@@ -195,7 +195,7 @@ class AllYourBaseTest < Minitest::Test
   end
 
   def test_first_base_is_one
-    skip
+    # skip
     digits = []
     input_base = 1
     output_base = 10
@@ -206,7 +206,7 @@ class AllYourBaseTest < Minitest::Test
   end
 
   def test_second_base_is_one
-    skip
+    # skip
     digits = [1, 0, 1, 0, 1, 0]
     input_base = 2
     output_base = 1
@@ -217,7 +217,7 @@ class AllYourBaseTest < Minitest::Test
   end
 
   def test_first_base_is_zero
-    skip
+    # skip
     digits = []
     input_base = 0
     output_base = 10
@@ -228,7 +228,7 @@ class AllYourBaseTest < Minitest::Test
   end
 
   def test_second_base_is_zero
-    skip
+    # skip
     digits = [7]
     input_base = 10
     output_base = 0
@@ -239,7 +239,7 @@ class AllYourBaseTest < Minitest::Test
   end
 
   def test_first_base_is_negative
-    skip
+    # skip
     digits = [1]
     input_base = -2
     output_base = 10
@@ -250,7 +250,7 @@ class AllYourBaseTest < Minitest::Test
   end
 
   def test_second_base_is_negative
-    skip
+    # skip
     digits = [1]
     input_base = 2
     output_base = -7
@@ -261,7 +261,7 @@ class AllYourBaseTest < Minitest::Test
   end
 
   def test_both_bases_are_negative
-    skip
+    # skip
     digits = [1]
     input_base = -2
     output_base = -7
@@ -289,7 +289,7 @@ class AllYourBaseTest < Minitest::Test
   # http://ruby-doc.org/docs/ruby-doc-bundle/UsersGuide/rg/constants.html
 
   def test_bookkeeping
-    skip
+    # skip
     assert_equal 2, BookKeeping::VERSION
   end
 end
