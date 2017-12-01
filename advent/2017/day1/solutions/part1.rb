@@ -4,7 +4,7 @@
 # printer's broken! We can't print the Naughty or Nice List!" By the time you
 # make it to sub-basement 17, there are only a few minutes until midnight. "We
 # have a big problem," she says; "there must be almost fifty bugs in this system,
-# but nothing else can print The List. Stand in this square, quick! There's no 
+# but nothing else can print The List. Stand in this square, quick! There's no
 # time to explain; if you can convince them to pay you in stars, you'll be able
 # to--" She pulls a lever and the world goes blurry.
 #
@@ -36,3 +36,5 @@ def sum(number_string)
   total += digits.first if digits.first == digits.last
   total
 end
+
+p sum(File.read("./input/part1.txt").chomp)
