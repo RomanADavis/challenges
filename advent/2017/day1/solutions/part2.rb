@@ -14,7 +14,7 @@ def sum(digit_string)
 
   total = 0
 
-  digit[0..(digits.length / 2)].each_with_index do |digit, index|
+  digits[0..(digits.length / 2)].each_with_index do |digit, index|
     total += digit * 2 if digit == digits[index + digits.length / 2]
   end
 
