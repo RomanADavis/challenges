@@ -20,3 +20,5 @@ def sum(digit_string)
 
   total
 end
+
+p sum(File.read("./input/part2.txt").chomp)
