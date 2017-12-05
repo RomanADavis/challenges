@@ -13,10 +13,16 @@
 # next time it is encountered.
 
 class Computer
+  attr_accessor :jumps, :pointers, :counter
   def initialize(program)
     self.jumps = program.map(&:to_i)
     self.pointers = {'@' => 0, '@+' => 0} #Instruction pointer + lookahead
     self.counter = 0
+  end
+
+  def count
+    run
+    self.counter
   end
 
   def run
@@ -32,3 +38,7 @@ class Computer
     self.pointers['@'] = self.pointers['@+']
   end
 end
+
+p Computer.new([0, 3, 0, 1, -3]).count
+
+p Computer.new(File.readlines("../input/jumps.txt")).count
