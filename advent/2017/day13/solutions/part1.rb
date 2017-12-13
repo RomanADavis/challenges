@@ -26,10 +26,11 @@ class Layer
 end
 
 class Firewall
-  attr_accessor :layers
+  attr_accessor :grid, :layers
 
   def initialize(filename)
     self.layers = parse(File.readlines(filename))
+    self.grid = grid
   end
 
   def parse(lines)
@@ -38,17 +39,21 @@ class Firewall
     end
   end
 
-  def image
+  def grid
     # Set the parameters of the grid
-    firewall = Array.new(self.layers.max_by(&:depth).depth + 1) do
+    board = Array.new(self.layers.max_by(&:depth).depth + 1) do
       Array.new(self.layers.max_by(&:range).range + 1) {"   "}
     end
 
     # Label layers and draw gaps
-    firewall.each_with_index do |line, index|
+    board.each_with_index do |line, index|
       line[0] = " #{index} "
       line[1] = "..."
-    end#
+    end
+  end
+
+  def image
+    firewall = grid
 
     # Draw walls
     self.layers.each do |layer|
