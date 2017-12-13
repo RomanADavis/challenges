@@ -26,11 +26,12 @@ class Layer
 end
 
 class Firewall
-  attr_accessor :grid, :layers
+  attr_accessor :grid, :layers, :position
 
   def initialize(filename)
     self.layers = parse(File.readlines(filename))
     self.grid = grid
+    self.position = 0
   end
 
   def parse(lines)
@@ -52,7 +53,7 @@ class Firewall
     end
   end
 
-  def image
+  def walls
     firewall = grid
 
     # Draw walls
@@ -66,6 +67,13 @@ class Firewall
     firewall.transpose
   end
 
+  def image
+    board = walls
+    board[1][self.position][0] = '('
+    board[1][self.position][2] = ')'
+    board
+  end
+
   def draw
     image.each do
       |line| line.each {|cell| print cell, ' '}
@@ -75,6 +83,7 @@ class Firewall
 
   def update
     self.layers.each {|layer| layer.update}
+    self.position += 1
   end
 
   def tick
@@ -84,7 +93,7 @@ class Firewall
   end
 
   def run
-    loop do
+    while self.position < grid.length
       tick
     end
   end
