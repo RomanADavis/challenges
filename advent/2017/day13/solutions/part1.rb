@@ -1,5 +1,6 @@
 class Layer
   attr_accessor :depth, :range, :scanner_position, :orientation
+
   def initialize(depth, range)
     self.depth = depth
     self.range = range
@@ -26,12 +27,13 @@ class Layer
 end
 
 class Firewall
-  attr_accessor :grid, :layers, :position
+  attr_accessor :grid, :layers, :position, :severity
 
   def initialize(filename)
     self.layers = parse(File.readlines(filename))
     self.grid = grid
     self.position = 0
+    self.severity = 0
   end
 
   def parse(lines)
@@ -86,9 +88,16 @@ class Firewall
     self.position += 1
   end
 
+  def get_caught
+    if layer = self.layers.find {|layer| layer.depth == self.position}
+      self.severity += layer.depth * layer.range if layer.scanner_position == 1
+    end
+  end
+
   def tick
-    draw
-    gets
+    get_caught
+    # draw
+    # gets
     update
   end
 
@@ -96,7 +105,10 @@ class Firewall
     while self.position < grid.length
       tick
     end
+
+    self
   end
 end
 
-Firewall.new("../input/sample.txt").run
+p Firewall.new("../input/sample.txt").run.severity
+p Firewall.new("../input/firewall.txt").run.severity
