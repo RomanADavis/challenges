@@ -15,6 +15,18 @@ class KnotHash
     end
   end
 
+  def self.print_disk(input)
+    diskgrid(input).each do |row|
+      puts row
+    end
+  end
+
+  def self.diskgrid(input)
+    diskhash(input).collect do |hash|
+      hash.hex.to_s(2).rjust(128, '0').chars.map {|bit| bit == '1' ? '#' : '.'}.join
+    end
+  end
+
   def self.count(input)
     diskhash(input).inject(0) do |total, hash|
       total + hash.hex.to_s(2).chars.count {|char| char == '1'}
@@ -80,5 +92,6 @@ class KnotHash
   end
 end
 
+KnotHash.print_disk("flqrnkx")
 p KnotHash.count("flqrgnkx")
 p KnotHash.count("stpzcrnm")
