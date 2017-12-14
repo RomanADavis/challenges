@@ -45,8 +45,7 @@ class KnotHash
     self.skip_size = 0
   end
 
-  def solve
-    # p self.content
+  def checksum
     twist_all
 
     self.content[0..1].inject(:*)
@@ -86,8 +85,8 @@ class KnotHash
   end
 end
 
-p KnotHash.new([3, 4, 1, 5], 4).solve
+p KnotHash.new([3, 4, 1, 5], 4).checksum
 
 lengths = File.readlines("../input/lengths.txt")[0].split(',').map(&:to_i)
 
-p KnotHash.new(lengths).solve
+p KnotHash.new(lengths).checksum
