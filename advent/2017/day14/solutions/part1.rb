@@ -1,11 +1,24 @@
 class KnotHash
-  attr_accessor :content, :position, :lengths, :skip_size
+  attr_accessor :input, :lengths, :content, :position, :skip_size
 
   def initialize(input, tail = 255)
-    self.lengths = salt(input)
-    self.content = (0..tail).to_a
-    self.position = 0
+    self.input     = input
+    self.lengths   = salt(input)
+    self.content   = (0..tail).to_a
+    self.position  = 0
     self.skip_size = 0
+  end
+
+  def self.diskhash(input)
+    (0..127).collect do |n|
+      KnotHash.new("#{input}-#{n}").generate
+    end
+  end
+
+  def self.count(input)
+    diskhash(input).inject(0) do |total, hash|
+      total + hash.hex.to_s(2).chars.count {|char| char == '1'}
+    end
   end
 
   def salt(input)
@@ -66,3 +79,6 @@ class KnotHash
     self.content
   end
 end
+
+p KnotHash.count("flqrgnkx")
+p KnotHash.count("stpzcrnm")
