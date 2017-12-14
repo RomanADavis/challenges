@@ -47,16 +47,20 @@ class KnotHash
 
   def solve
     # p self.content
+    twist_all
+
+    self.content[0..1].inject(:*)
+  end
+
+  def twist_all
     self.lengths.each do |length|
       twist(length)
       self.position = (self.position + length + self.skip_size) % self.content.length
       self.skip_size += 1
     end
-
-    self.content[0..1].inject(:*)
   end
 
-  def twist(length)
+  def reverse_subsection(length)
     tail = self.position + length
     mirror = self.content[position..(tail - 1)] || []
 
@@ -65,6 +69,10 @@ class KnotHash
     end
 
     mirror = mirror.reverse
+  end
+
+  def twist(length)
+    mirror = reverse_subsection(length)
 
     self.content.each_with_index do |_, index|
       self.content[index] = mirror.shift if index >= position && mirror[-1]
