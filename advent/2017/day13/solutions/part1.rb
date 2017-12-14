@@ -27,13 +27,18 @@ class Layer
 end
 
 class Firewall
-  attr_accessor :grid, :layers, :position, :severity
+  attr_accessor :filename, :grid, :layers, :position, :severity
 
   def initialize(filename)
+    self.filename = filename
     self.layers = parse(File.readlines(filename))
     self.grid = grid
     self.position = 0
     self.severity = 0
+  end
+
+  def reset
+    initialize(filename)
   end
 
   def parse(lines)
@@ -83,8 +88,14 @@ class Firewall
     end
   end
 
+  def wait(picoseconds = 1)
+    picoseconds.times do
+      self.layers.each {|layer| layer.update}
+    end
+  end
+
   def update
-    self.layers.each {|layer| layer.update}
+    wait
     self.position += 1
   end
 
