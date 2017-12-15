@@ -1,6 +1,5 @@
 class Layer
   attr_accessor :depth, :range, :scanner_position, :orientation
-
   def initialize(depth, range)
     self.depth = depth
     self.range = range
