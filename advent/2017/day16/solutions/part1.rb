@@ -1,36 +1,19 @@
 class DanceLine
-  attr_accessor :programs, :moves
+  attr_accessor :programs, :moves, :operations
   def initialize(programs, dance_moves)
     self.programs = programs
     self.moves = dance_moves.split(',')
-  end
 
-  def spin(arg)
-    x = arg.to_i
-    self.programs = self.programs[-x..-1] + self.programs[0..(-x - 1)]
-  end
+    spin = ->(x) {self[0..-1] = self[-x.to_i..-1] + self[0..(-x.to_i - 1)]}
+    exchange = ->(a, b) {self[a.to_i], self[b.to_i] = self[b.to_i], self[a.to_i]}
+    partner = ->(a, b) {self[find_index(a)], self[find_index(b)] = b, a}
 
-  def exchange(args) # switch programs at position a and b
-    a, b = args.chomp.split('/').map(&:to_i)
-    hold = self.programs[a]
-    self.programs[a] = self.programs[b]
-    self.programs[b] = hold
-  end
-
-  def partner(args) # switch programs named a and b
-    a, b = args.chomp.split('/')
-    hold_index = self.programs.find_index(b)
-    self.programs[self.programs.find_index(a)] = b
-    self.programs[hold_index] = a
+    self.operations = {'s' => spin,'x' => exchange,'p' => partner}
   end
 
   def execute(move)
-    #p [move, self.programs]
-    case move[0]
-    when 's' then spin(move[1..-1])
-    when 'x' then exchange(move[1..-1])
-    when 'p' then partner(move[1..-1])
-    end
+    args, operation = move[1..-1].split('/'), self.operations[move[0]]
+    self.programs.instance_exec(*args, &operation)
   end
 
   def run
