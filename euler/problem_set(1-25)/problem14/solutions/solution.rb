@@ -1,4 +1,4 @@
-class Collatz
+55.class Collatz
   attr_accessor :position, :iterations
   def initialize(start)
     self.position   = start
