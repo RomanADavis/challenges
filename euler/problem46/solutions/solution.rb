@@ -10,10 +10,6 @@ def prime?(n)
   true
 end
 
-def square?(n)
-  n**0.5 % 1 == 0
-end
-
 def conjecture?(n)
   return true if prime?(n) # Conjecture only applies to composites
   s = 1
@@ -24,6 +20,6 @@ def conjecture?(n)
   false
 end
 
-n = 35
+n = 35 # Last example given
 n += 2 while conjecture?(n)
 p n
