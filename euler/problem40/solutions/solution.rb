@@ -3,12 +3,14 @@ class Champernowe
     pointer = value = 0
     count = 1
     rail = [count]
-
     index.times do
-      count, rail = count + 1, count.to_s.chars if rail.empty?
+      if rail.empty?
+        count += 1
+        rail = count.to_s.chars
+      end
+
       value = rail.shift
     end
-    
     value.to_i
   end
 end

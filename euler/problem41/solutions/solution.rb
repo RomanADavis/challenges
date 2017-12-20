@@ -9,6 +9,7 @@ class Pandigital
     candidates = all.reject {|candidate| candidate % 2 == 0}
     primes = []
     cap = (candidates.max**0.5).to_i
+
     (3..cap).step(2).each do |n|
       candidates.reject! {|candidate| candidate % n == 0}
     end
