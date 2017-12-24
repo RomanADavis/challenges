@@ -9,6 +9,10 @@ class Game
     self.player1hand.win_against?(self.player2hand)
   end
 
+  def player2_win?
+    self.player2hand.win_against?(self.player1hand)
+  end
+
   def outcome
     if player1_win?
       puts "Winner: Player 1"

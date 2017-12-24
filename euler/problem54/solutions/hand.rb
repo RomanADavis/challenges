@@ -1,7 +1,7 @@
 class Hand
   attr_accessor :cards, :sets
   def initialize(card_strings)
-    self.cards = card_strings.map {|string| Card.new(string)}.sort_by!(&:value)
+    self.cards = card_strings.map {|string| Card.new(string)}.sort_by(&:value)
 
     sets = self.cards.map do |card|
       self.cards.select {|other| card.value == other.value}
@@ -138,6 +138,6 @@ class Hand
   end
 
   def royal_flush?
-    straight_flush? && self.cards[-1] == 14
+    straight_flush? && self.cards[-1].value == 14
   end
 end
