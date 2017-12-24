@@ -1,4 +1,4 @@
-class Replaceable
+class Repeatable
   attr_accessor :string, :values
   def initialize(string)
     self.string = string
@@ -14,7 +14,7 @@ class Replaceable
   end
 end
 
-class NonReplaceable
+class NonRepeatable
   attr_accessor :string, :values
   def initialize(string)
     self.string = string
