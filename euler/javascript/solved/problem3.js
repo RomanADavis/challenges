@@ -16,5 +16,5 @@ function primeFactors(number){
   return factors;
 }
 
-console.log(`The prime factors of 13195 are ${primeFactors(13195)}`);
-console.log(`The largest prime factor of 600851475143 is ${primeFactors(600851475143).pop()}`);
+console.log(`The prime factors of 13195 are ${primeFactors(13195)}.`);
+console.log(`The largest prime factor of 600851475143 is ${primeFactors(600851475143).pop()}.`);
